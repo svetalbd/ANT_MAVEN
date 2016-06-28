@@ -1,0 +1,69 @@
+<project name="PlaneArea" basedir=".">
+    <property name = "src" location = "src"/>
+    <property name = "build" location = "build"/>
+    <property name = "dist" location = "dist"/>
+    <property name = "lib" location = "lib"/>
+    <property name = "test.src" location = "test"/>
+    <property name = "test.build" location = "test.build"/>
+    <property name = "test.report" location = "test.report"/>
+
+    <target name = "init">
+        <mkdir dir = "${build}"/>
+        <mkdir dir = "${dist}"/>
+        <mkdir dir = "${test.build}"/>
+        <mkdir dir = "${test.report}"/>
+    </target>
+
+    <target name = "compile" depends = "init">
+        <javac includeantruntime="false" srcdir = "${src}" destdir = "${build}" source = "1.8" target = "1.8"/>
+    </target>
+
+    <path id = "test.classpath">
+        <pathelement location="${lib}/junit-4.12.jar"/>
+        <pathelement location="${lib}/hamcrest-core-1.3.jar"/>
+        <pathelement location="${lib}/kotlin-reflect.jar"/>
+        <pathelement location="${lib}/kotlin-runtime.jar"/>
+        <pathelement location="${lib}/kotlin-runtime-sources.jar"/>
+
+        <pathelement location="${build}"/>
+        <pathelement location="${test.build}"/>
+    </path>
+
+    <target name = "dist" depends="compile">
+        <jar destfile = "${dist}/executable.jar">
+            <fileset dir = "${build}"/>
+            <manifest>
+                <attribute name="Main-Class" value = "com.goit.generics.Runner"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name = "compile.test" depends = "compile">
+        <javac includeantruntime="false" srcdir = "${test.src}" destdir = "${test.build}" source = "1.8" target = "1.8">
+            <classpath>
+                <path refid = "test.classpath"/>
+            </classpath>
+        </javac>
+    </target>
+
+    <target name="junit" depends="compile.test">
+        <junit printsummary="yes" haltonfailure="no">
+            <classpath>
+                <path refid="test.classpath" />
+            </classpath>
+
+            <test name="IntExecutorTest" haltonfailure="no" todir="${test.report}">
+                <formatter type="plain" />
+                <formatter type="xml" />
+            </test>
+        </junit>
+    </target>
+
+    <target name = "clean">
+        <delete dir = "${build}"/>
+        <delete dir = "${dist}"/>
+        <delete dir = "${test.build}"/>
+        <delete dir = "${test.report}"/>
+    </target>
+
+</project>

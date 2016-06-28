@@ -1,0 +1,5 @@
+Testsuite: IntExecutorTest
+Tests run: 2, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0,177 sec
+
+Testcase: testName2 took 0,006 sec
+Testcase: testGetValidResults took 0,002 sec

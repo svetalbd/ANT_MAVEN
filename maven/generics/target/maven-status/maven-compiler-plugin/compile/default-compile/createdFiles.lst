@@ -1,0 +1,7 @@
+main\java\implementation\IntValidator.class
+main\java\interfaces\Executor.class
+main\java\interfaces\Task.class
+main\java\implementation\IntExecutor.class
+main\java\implementation\IntTask.class
+main\java\interfaces\Validator.class
+main\java\Runner.class
